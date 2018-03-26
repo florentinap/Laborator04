@@ -1,5 +1,6 @@
 package ro.pub.cs.systems.eim.lab04.contactsmanager;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.provider.ContactsContract;
@@ -9,115 +10,116 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ContactsManagerActivity extends AppCompatActivity {
 
-    private Button showDetails;
-    private Button save;
-    private Button cancel;
-
-    private LinearLayout hideContainer;
-
-    private EditText nameEditText;
-    private EditText phoneEditText;
-    private EditText emailEditText;
-    private EditText addressEditText;
-    private EditText jobEditText;
-    private EditText companyEditText;
-    private EditText websiteEditText;
-    private EditText imEditText;
+    Button save, cancel, show_hide;
+    EditText name, phone, email, address, job, company, website, im;
+    LinearLayout fields;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_manager);
 
-        showDetails = (Button)findViewById(R.id.button2);
-        showDetails.setOnClickListener(buttonClickListener);
-        save = (Button)findViewById(R.id.button5);
-        save.setOnClickListener(buttonClickListener);
-        cancel = (Button)findViewById(R.id.button4);
-        cancel.setOnClickListener(buttonClickListener);
+        save = findViewById(R.id.save);
+        save.setOnClickListener(onClickListener);
+        cancel = findViewById(R.id.cancel);
+        cancel.setOnClickListener(onClickListener);
+        show_hide = findViewById(R.id.show_hide);
+        show_hide.setOnClickListener(onClickListener);
 
-        hideContainer = (LinearLayout)findViewById(R.id.extraContainer);
+        name = findViewById(R.id.name);
+        phone = findViewById(R.id.phone);
+        email = findViewById(R.id.email);
+        address = findViewById(R.id.address);
+        job = findViewById(R.id.job);
+        company = findViewById(R.id.company);
+        website = findViewById(R.id.website);
+        im = findViewById(R.id.im);
 
-        nameEditText = (EditText)findViewById(R.id.editText4);
-        phoneEditText = (EditText)findViewById(R.id.editText3);
-        emailEditText = (EditText)findViewById(R.id.editText2);
-        addressEditText = (EditText)findViewById(R.id.editText);
-        jobEditText = (EditText)findViewById(R.id.editText5);
-        companyEditText = (EditText)findViewById(R.id.editText6);
-        websiteEditText = (EditText)findViewById(R.id.editText7);
-        imEditText = (EditText)findViewById(R.id.editText8);
+        fields = findViewById(R.id.fields);
 
+        Intent intent = getIntent();
+        if (intent != null) {
+            String phoneNr = intent.getStringExtra("ro.pub.cs.systems.eim.lab04.contactsmanager.PHONE_NUMBER_KEY");
+            if (phone != null) {
+                phone.setText(phoneNr);
+            } else {
+                Toast.makeText(this, "Incorrect phone", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
-    private ButtonClickListener buttonClickListener = new ButtonClickListener();
-    private class ButtonClickListener implements View.OnClickListener {
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch(requestCode) {
+            case 1:
+                setResult(resultCode, new Intent());
+                finish();
+                break;
+        }
+    }
 
+    private ButtonClickListener onClickListener = new ButtonClickListener();
+    private class ButtonClickListener implements Button.OnClickListener {
         @Override
         public void onClick(View v) {
-            if (v.getId() == R.id.button2) {
-                if (hideContainer.getVisibility() == View.VISIBLE) {
-                    showDetails.setText("Show Additional Details");
-                    hideContainer.setVisibility(View.INVISIBLE);
-                } else {
-                    showDetails.setText("Hide Additional Details");
-                    hideContainer.setVisibility(View.VISIBLE);
+            if (v.getId() == R.id.show_hide) {
+                if (fields.getVisibility() == View.VISIBLE) {
+                    fields.setVisibility(View.GONE);
+                    show_hide.setText("Show Additional Details");
+                }
+                else {
+                    fields.setVisibility(View.VISIBLE);
+                    show_hide.setText("Hide Additional Details");
                 }
             }
-            if (v.getId() == R.id.button5) {
 
-                String name = nameEditText.getText().toString();
-                String phone = phoneEditText.getText().toString();
-                String email = emailEditText.getText().toString();
-                String address = addressEditText.getText().toString();
-                String job = jobEditText.getText().toString();
-                String company = companyEditText.getText().toString();
-                String website = websiteEditText.getText().toString();
-                String im = imEditText.getText().toString();
-
+            if (v.getId() == R.id.save) {
                 Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
                 intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                if (name != null) {
-                    intent.putExtra(ContactsContract.Intents.Insert.NAME, name);
+                if (name.getText() != null) {
+                    intent.putExtra(ContactsContract.Intents.Insert.NAME, name.getText());
                 }
-                if (phone != null) {
-                    intent.putExtra(ContactsContract.Intents.Insert.PHONE, phone);
+                if (phone.getText() != null) {
+                    intent.putExtra(ContactsContract.Intents.Insert.PHONE, phone.getText());
                 }
-                if (email != null) {
-                    intent.putExtra(ContactsContract.Intents.Insert.EMAIL, email);
+                if (email.getText() != null) {
+                    intent.putExtra(ContactsContract.Intents.Insert.EMAIL, email.getText());
                 }
-                if (address != null) {
-                    intent.putExtra(ContactsContract.Intents.Insert.POSTAL, address);
+                if (address.getText() != null) {
+                    intent.putExtra(ContactsContract.Intents.Insert.POSTAL, address.getText());
                 }
-                if (job != null) {
-                    intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, job);
+                if (job.getText() != null) {
+                    intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, job.getText());
                 }
-                if (company != null) {
-                    intent.putExtra(ContactsContract.Intents.Insert.COMPANY, company);
+                if (company.getText() != null) {
+                    intent.putExtra(ContactsContract.Intents.Insert.COMPANY, company.getText());
                 }
                 ArrayList<ContentValues> contactData = new ArrayList<ContentValues>();
-                if (website != null) {
+                if (website.getText() != null) {
                     ContentValues websiteRow = new ContentValues();
                     websiteRow.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE);
-                    websiteRow.put(ContactsContract.CommonDataKinds.Website.URL, website);
+                    websiteRow.put(ContactsContract.CommonDataKinds.Website.URL, website.getText().toString());
                     contactData.add(websiteRow);
                 }
-                if (im != null) {
+                if (im.getText() != null) {
                     ContentValues imRow = new ContentValues();
                     imRow.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
-                    imRow.put(ContactsContract.CommonDataKinds.Im.DATA, im);
+                    imRow.put(ContactsContract.CommonDataKinds.Im.DATA, im.getText().toString());
                     contactData.add(imRow);
                 }
                 intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, contactData);
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
 
-            if (v.getId() == R.id.button4) {
+            if (v.getId() == R.id.cancel) {
                 finish();
+                setResult(Activity.RESULT_CANCELED, new Intent());
             }
         }
     }

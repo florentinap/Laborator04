@@ -7,14 +7,12 @@
     tools:context="ro.pub.cs.systems.eim.lab04.contactsmanager.ContactsManagerActivity">
 
     <ScrollView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -23,13 +21,14 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/show_hide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="right"
                     android:text="Show Additional Fields" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -37,24 +36,24 @@
                     android:inputType="textPersonName" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:enabled="false"
                     android:hint="1122334455"
-                    android:inputType="phone" />
+                    android:inputType="phone"
+                    android:enabled="false"/>
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailSubject" />
 
                 <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -67,39 +66,39 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/button5"
+                        android:id="@+id/save"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="SAVE" />
+                        android:text="Save" />
 
                     <Button
-                        android:id="@+id/button4"
+                        android:id="@+id/cancel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="CANCEL" />
+                        android:text="Cancel" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/extraContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="invisible">
+                android:visibility="invisible"
+                android:id="@+id/fields">
 
                 <EditText
-                    android:id="@+id/editText5"
+                    android:id="@+id/job"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Job"
+                    android:hint="Job Title"
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/editText6"
+                    android:id="@+id/company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -107,15 +106,15 @@
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/editText7"
+                    android:id="@+id/website"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Website"
-                    android:inputType="text" />
+                    android:inputType="textUri" />
 
                 <EditText
-                    android:id="@+id/editText8"
+                    android:id="@+id/im"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -123,7 +122,5 @@
                     android:inputType="text" />
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>
